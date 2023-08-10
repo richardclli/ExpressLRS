@@ -23,6 +23,9 @@ HardwareSerial CRSF::Port(GPIO_PIN_RCSIGNAL_RX, GPIO_PIN_RCSIGNAL_TX);
 #elif defined(STM32F1) || defined(STM32F1xx)
 #include "stm32f1xx_hal.h"
 #include "stm32f1xx_hal_gpio.h"
+#elif defined(STM32F0) || defined(STM32F0xx)
+#include "stm32f0xx_hal.h"
+#include "stm32f0xx_hal_gpio.h"
 #endif
 #elif defined(TARGET_NATIVE)
 HardwareSerial CRSF::Port = Serial;
@@ -157,6 +160,14 @@ void CRSF::Begin()
     USART2->CR1 &= ~USART_CR1_UE;
     USART2->CR2 |= USART_CR2_RXINV | USART_CR2_TXINV; //inverted
     USART2->CR1 |= USART_CR1_UE;
+#endif
+#if defined(TARGET_TX_FLYSKY_FRM301)
+    LL_GPIO_SetPinPull(GPIOA, GPIO_PIN_9, LL_GPIO_PULL_DOWN); // default is PULLUP
+    LL_GPIO_SetPinPull(GPIOA, GPIO_PIN_10, LL_GPIO_PULL_DOWN); // default is PULLUP
+    USART1->CR1 &= ~USART_CR1_UE;
+    USART1->CR3 |= USART_CR3_HDSEL;
+    USART1->CR2 |= USART_CR2_RXINV | USART_CR2_TXINV; //inverted
+    USART1->CR1 |= USART_CR1_UE;
 #endif
     DBGLN("STM32 CRSF UART LISTEN TASK STARTED");
     CRSF::Port.flush();
@@ -867,6 +878,14 @@ bool CRSF::UARTwdt()
             USART2->CR1 &= ~USART_CR1_UE;
             USART2->CR2 |= USART_CR2_RXINV | USART_CR2_TXINV; //inverted
             USART2->CR1 |= USART_CR1_UE;
+#elif defined(TARGET_TX_FLYSKY_FRM301)
+            CRSF::Port.begin(UARTrequestedBaud);
+            LL_GPIO_SetPinPull(GPIOA, GPIO_PIN_9, LL_GPIO_PULL_DOWN); // default is PULLUP
+            LL_GPIO_SetPinPull(GPIOA, GPIO_PIN_10, LL_GPIO_PULL_DOWN); // default is PULLUP
+            USART1->CR1 &= ~USART_CR1_UE;
+            USART1->CR3 |= USART_CR3_HDSEL;
+            USART1->CR2 |= USART_CR2_RXINV | USART_CR2_TXINV; //inverted
+            USART1->CR1 |= USART_CR1_UE;
 #else
             CRSF::Port.begin(UARTrequestedBaud);
 #endif
