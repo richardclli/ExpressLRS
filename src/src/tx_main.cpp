@@ -31,6 +31,10 @@
 #define USBSerial Serial
 #endif
 
+#if defined(TARGET_TX_FLYSKY)
+#include "usbd_upd_hid_core.h"
+#endif
+
 //// CONSTANTS ////
 #define MSP_PACKET_SEND_INTERVAL 10LU
 
@@ -1503,6 +1507,10 @@ void setup()
     config.SetMotionMode(0); // Ensure motion detection is off
     UARTconnected();
   }
+
+#if defined(TARGET_TX_FLYSKY)
+  USB_Init();
+#endif
 }
 
 void loop()
@@ -1525,6 +1533,10 @@ void loop()
 
   // Update UI devices
   devicesUpdate(now);
+
+#if defined(TARGET_TX_FLYSKY)
+  USB_UPD_Background();
+#endif
 
   // Not a device because it must be run on the loop core
   checkBackpackUpdate();
