@@ -11,8 +11,8 @@ volatile unsigned long*  BootloaderVersion       =    (unsigned long*) 0x0800021
 
 const __attribute__((section (".firmware_signature"))) unsigned long   FirmwareSignature[2] = {FIRMWARE_SIGNATURE_1, FIRMWARE_SIGNATURE_2};
 const __attribute__((section (".firmware_length"))) unsigned long  	FirmwareLength = 0x12345678;
-const __attribute__((section (".firmware_versionH"))) unsigned long  	FirmwareVersionH = 0x00010000;
-const __attribute__((section (".firmware_versionL"))) unsigned long  	FirmwareVersionL = 0x00010001;
+const __attribute__((section (".firmware_versionH"))) unsigned long  	FirmwareVersionH = 0x00030005;
+const __attribute__((section (".firmware_versionL"))) unsigned long  	FirmwareVersionL = 0x00000002;
 const __attribute__((section (".rf_library_version"))) unsigned long  	RFLibraryVersion = 0x00030000;
 const __attribute__((section (".firmware_reserved"))) unsigned long  	FirmwareReserved[0x68/4];
 
