@@ -447,7 +447,7 @@ void CRSFHandset::handleInput()
         // If there is still data in the transmit buffers then exit, and we'll check next go round.
 #if defined(PLATFORM_STM32)
 #ifndef SERIAL_USE_DMA
-        if (Port.availableForWrite() != SERIAL_TX_BUFFER_SIZE - 1)
+        if (Port.availableForWrite() != USART_TX_BUFFER_SIZE - 1)
         {
             return;
         }
