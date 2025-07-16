@@ -6,7 +6,6 @@
 #define TARGET_EEPROM_ADDR      0x50
 #define TARGET_EEPROM_SIZE      kbits_256
 #define TARGET_EEPROM_PAGE_SIZE 64
-#define BACKPACK_LOGGING_BAUD   400000
 
 #define SERIAL_USE_DMA
 #define SERIAL_INSTANCE         0
